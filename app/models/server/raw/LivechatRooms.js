@@ -896,7 +896,7 @@ export class LivechatRoomsRaw extends BaseRaw {
 		return this.col.aggregate(params);
 	}
 
-	findRoomsWithCriteria({ agents, roomName, departmentId, open, served, createdAt, closedAt, tags, customFields, visitorId, roomIds, options = {} }) {
+	findRoomsWithCriteria({ agents, roomName, departmentId, open, served, createdAt, closedAt, tags, customFields, visitorEmail, visitorId, roomIds, options = {} }) {
 		const query = {
 			t: 'l',
 		};
@@ -917,6 +917,10 @@ export class LivechatRoomsRaw extends BaseRaw {
 		}
 		if (visitorId && visitorId !== 'undefined') {
 			query['v._id'] = visitorId;
+		}
+		if (visitorEmail && visitorEmail !== 'undefined') {
+			query['v.visitorEmail'] = { $in: [{ address: visitorEmail }] };
+			console.log('---------------------------', query);
 		}
 		if (createdAt) {
 			query.ts = {};

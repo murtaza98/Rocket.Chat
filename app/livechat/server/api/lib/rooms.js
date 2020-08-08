@@ -9,6 +9,7 @@ export async function findRooms({
 	closedAt,
 	tags,
 	customFields,
+	visitorEmail,
 	options: {
 		offset,
 		count,
@@ -25,6 +26,7 @@ export async function findRooms({
 		closedAt,
 		tags,
 		customFields,
+		visitorEmail,
 		options: {
 			sort: sort || { ts: -1 },
 			offset,
