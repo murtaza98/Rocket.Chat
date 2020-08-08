@@ -919,7 +919,7 @@ export class LivechatRoomsRaw extends BaseRaw {
 			query['v._id'] = visitorId;
 		}
 		if (visitorEmail && visitorEmail !== 'undefined') {
-			query['v.visitorEmail'] = { $in: [{ address: visitorEmail }] };
+			query['v.visitorEmails'] = { $in: [{ address: visitorEmail }] };
 			console.log('---------------------------', query);
 		}
 		if (createdAt) {
