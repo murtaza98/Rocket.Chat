@@ -247,7 +247,7 @@ export const getLivechatQueueInfo = async (room) => {
 	return normalizeQueueInfo(inq);
 };
 
-export const transferToNewAgent = async (roomId, transferredBy) => {
+export const autoTransferToNewAgent = async (roomId, transferredBy) => {
 	const room = await LivechatRooms.findOneById(roomId);
 	const timeout = await settings.get('Livechat_auto_transfer_chat_if_no_response_routing');
 
@@ -262,7 +262,10 @@ export const transferToNewAgent = async (roomId, transferredBy) => {
 	};
 
 	try {
-		await Livechat.transfer(room, guest, transferData);
+		const result = await Livechat.transfer(room, guest, transferData);
+		if (result) {
+			await LivechatRooms.setAutoTransferredAtById(roomId, new Date());
+		}
 	} catch (err) {
 		console.error(`Error occurred while transferring chat. Details: ${ err.message }`);
 	}
